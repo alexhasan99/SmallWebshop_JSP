@@ -1,2 +1,4 @@
-package bo;public class item {
+package bo;
+
+public class item {
 }
