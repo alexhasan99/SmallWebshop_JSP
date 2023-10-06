@@ -22,6 +22,7 @@
                             <input type="checkbox" onclick="togglePasswordVisibility()"> Show Password
                         </div>
                         <button type="submit" class="btn btn-primary">Login</button>
+                        <a href="Registration.jsp" class="btn btn-secondary">Register</a>
                     </form>
                 </div>
             </div>

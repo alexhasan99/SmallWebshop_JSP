@@ -1,24 +1,32 @@
 package db;
 
+import org.apache.commons.dbcp2.BasicDataSource;
+
 import java.sql.Connection;
-import java.sql.DriverManager;
 
 public class DBManger {
-    private static DBManger instance= null;
-    private Connection con= null;
+    private static DBManger instance = null;
+    private BasicDataSource dataSource;
 
-    private static DBManger getInstance(){
-        if (instance== null)
+    private static DBManger getInstance() {
+        if (instance == null)
             instance = new DBManger();
         return instance;
     }
+
     private DBManger() {
-        try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-            con= DriverManager.getConnection("jdbc:mysql://localhost/smallWebShop?user=root&password=test1212");
-            System.out.println("Connection successful!");
-        }catch (Exception e) {e.printStackTrace();}
+        dataSource = new BasicDataSource();
+        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+        dataSource.setUrl("jdbc:mysql://localhost/smallWebShop?user=root&password=test1212");
+        System.out.println("Connection pool initialized!");
     }
 
-    public static Connection getConnection(){return getInstance().con;};
+    public static Connection getConnection() {
+        try {
+            return getInstance().dataSource.getConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
