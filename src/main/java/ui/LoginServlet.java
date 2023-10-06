@@ -1,7 +1,7 @@
 package ui;
 import java.io.IOException;
 
-import db.UserDB;
+import bo.UserHandler;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -30,8 +30,10 @@ public class LoginServlet extends HttpServlet {
         }
     }
 
+
+
     private boolean isValidUser(String username, String password) {
-        return UserDB.searchUser(username,password);
+        return UserHandler.checkUser(username,password);
     }
 }
 

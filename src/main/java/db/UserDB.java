@@ -1,30 +1,51 @@
 package db;
-
 import bo.User;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import db.DBManger;
+import java.sql.*;
 import java.util.Collection;
 import java.util.Vector;
 
 public class UserDB extends User {
     public static boolean searchUser(String username, String password) {
-
-        try {
-            Connection con = DBManger.getConnection();
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT id, name, password FROM users WHERE name = '" + username + "' AND password = '" + password + "'");
-            while (rs.next()) {
-                int i = rs.getInt("id");
-                String name = rs.getString("name");
-                String pass = rs.getString("password");
-                UserDB t= new UserDB(username, password, i);
-                if (t.getUsername().equals(username) && t.getPassword().equals(password))
-                    return true;
+        try (Connection con = DBManger.getConnection()) {
+            String query = "SELECT id, name, password FROM users WHERE name = ? AND password = ?";
+            try (PreparedStatement statement = con.prepareStatement(query)) {
+                statement.setString(1, username);
+                statement.setString(2, password);
+                try (ResultSet rs = statement.executeQuery()) {
+                    if (rs.next()) {
+                        return true;
+                    }
+                }
             }
-        }catch (SQLException e){e.printStackTrace();}
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public static boolean addUser(String username, String password) {
+        try (Connection con = DBManger.getConnection()) {
+            String query = "INSERT INTO users (name, password) VALUES (?, ?)";
+            try (PreparedStatement statement = con.prepareStatement(query)) {
+                statement.setString(1, username);
+                statement.setString(2, password);
+                int rowsInserted = statement.executeUpdate();
+                if (rowsInserted > 0) {
+                    return true;
+                }
+            } catch (SQLIntegrityConstraintViolationException e) {
+                // Handle the duplicate entry error here if needed.
+                System.err.println("User already exists with the same username: " + username);
+                return false;
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         return false;
     }

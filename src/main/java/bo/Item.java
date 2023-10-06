@@ -1,9 +1,18 @@
 package bo;
+
+import db.ItemDB;
+
+import java.util.Collection;
+
 public class Item {
 
     private String name;
     private int id;
     private String descr;
+
+    static public Collection searchItems(String group){
+        return ItemDB.searchItems(group);
+    }
 
     protected Item (int id, String name, String descr){
         this.id= id;
