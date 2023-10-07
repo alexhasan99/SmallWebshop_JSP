@@ -10,14 +10,21 @@ public class Item {
     private int id;
     private String descr;
 
-    static public Collection searchItems(String group){
-        return ItemDB.searchItems(group);
+    private byte[] imageData;
+
+    static public Collection searchItemsByCategory(String group){
+        return ItemDB.searchItemsByCategory(group);
     }
 
-    protected Item (int id, String name, String descr){
+    static public Collection getAllItems(){
+        return ItemDB.getAllItems();
+    }
+
+    protected Item (int id, String name, String descr, byte[] imageData){
         this.id= id;
         this.name= name;
         this.descr= descr;
+        this.imageData=imageData;
     }
 
     public String getName() {
@@ -42,5 +49,22 @@ public class Item {
 
     public void setDescr(String descr) {
         this.descr = descr;
+    }
+
+    public byte[] getImageData() {
+        return imageData;
+    }
+
+    public void setImageData(byte[] imageData) {
+        this.imageData = imageData;
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "name='" + name + '\'' +
+                ", id=" + id +
+                ", descr='" + descr + '\'' +
+                '}';
     }
 }
