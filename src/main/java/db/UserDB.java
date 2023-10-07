@@ -21,7 +21,6 @@ public class UserDB extends User {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return false;
     }
 

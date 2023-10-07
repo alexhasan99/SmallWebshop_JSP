@@ -4,9 +4,12 @@ public class ItemInfo {
     private String name;
     private String description;
 
-    public ItemInfo(String name, String description) {
+    private byte[] imageData;
+
+    public ItemInfo(String name, String description, byte[] imageData) {
         this.name = name;
         this.description = description;
+        this.imageData=imageData;
     }
 
     public String getName() {
@@ -23,5 +26,9 @@ public class ItemInfo {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public byte[] getImageData() {
+        return imageData;
     }
 }

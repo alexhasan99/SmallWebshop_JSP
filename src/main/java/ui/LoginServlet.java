@@ -13,7 +13,7 @@ public class LoginServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("Servlet doPost executed");
+        System.out.println("Servlet doGet executed");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         // Här bör du använda en säker metod för användarautentisering, t.ex. kontrollera en databas
@@ -22,7 +22,7 @@ public class LoginServlet extends HttpServlet {
             request.getSession().setAttribute("username", username);
 
             // Skicka användaren till välkomstsidan
-            response.sendRedirect("welcome.jsp");
+            response.sendRedirect("home.jsp");
         } else {
             // Om användaren är ogiltig, skicka dem tillbaka till inloggningssidan med ett felmeddelande
             request.setAttribute("message", "Invalid username or password.");
