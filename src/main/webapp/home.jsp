@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>Home</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/materia/bootstrap.min.css">
     <style>
         /* CSS för navigation bar */
         .navbar {
@@ -38,21 +39,32 @@
 <body>
 <!-- Navigationsbar -->
 <div class="navbar">
-    <a href="items">Items</a> <!-- Länk till items-sidan -->
-    <span class="cart-icon">🛒</span> <!-- Shopping cart-ikonen -->
+    <a href="items">Items</a>
+    <span class="cart-icon">🛒</span>
     <a href="logout">Log out</a>
 </div>
 
 <!-- Sidinnehåll -->
 <div class="content">
-    <!-- Här kan du inkludera innehållet för din startsida (t.ex., välkomsttext) -->
     <h1>Welcome to the Webshop</h1>
-    <!-- Lägg till mer innehåll här -->
-
-    <!-- Inkludera items.jsp om ett villkor är uppfyllt (t.ex., användaren är inloggad) -->
-    <c:if test="${loggedIn}">
-        <jsp:include page="items.jsp" />
-    </c:if>
+    <form action="home" method="GET">
+        <label for="category">Choose a Category:</label>
+        <select name="category" id="category">
+            <option value="Electronics">Electronics</option>
+            <option value="Clothing">Clothing</option>
+            <option value="Home & Garden">Home & Garden</option>
+            <option value="Books">Books</option>
+            <option value="Toys">Toys</option>
+            <option value="Sports">Sports</option>
+            <option value="Beauty">Beauty</option>
+            <option value="Other">Other</option>
+            <option value="Fruits">Fruits</option>
+            <option value="All">All</option>
+        </select>
+        <input type="submit" value="Show Items">
+    </form>
+    <a href="addItem.jsp">Add New Item</a>
+    <jsp:include page="items.jsp" />
 </div>
 
 </body>

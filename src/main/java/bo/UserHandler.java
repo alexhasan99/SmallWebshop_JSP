@@ -9,6 +9,7 @@ public class UserHandler {
     }
 
     public static boolean addUser(String user, String password){
+
         return UserDB.addUser(user, password);
     }
 }
