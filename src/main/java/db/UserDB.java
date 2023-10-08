@@ -1,13 +1,11 @@
 package db;
 import bo.User;
-import db.DBManger;
+
 import java.sql.*;
-import java.util.Collection;
-import java.util.Vector;
 
 public class UserDB extends User {
     public static boolean searchUser(String username, String password) {
-        try (Connection con = DBManger.getConnection()) {
+        try (Connection con = DBManager.getConnection()) {
             String query = "SELECT id, name, password FROM users WHERE name = ? AND password = ?";
             try (PreparedStatement statement = con.prepareStatement(query)) {
                 statement.setString(1, username);
@@ -25,7 +23,7 @@ public class UserDB extends User {
     }
 
     public static boolean addUser(String username, String password) {
-        try (Connection con = DBManger.getConnection()) {
+        try (Connection con = DBManager.getConnection()) {
             String query = "INSERT INTO users (name, password) VALUES (?, ?)";
             try (PreparedStatement statement = con.prepareStatement(query)) {
                 statement.setString(1, username);

@@ -11,7 +11,7 @@ public class ItemDB extends bo.Item {
     public static Collection searchItemsByCategory(String categoryName) {
         ArrayList items = new ArrayList();
 
-        try (Connection con = DBManger.getConnection()) {
+        try (Connection con = DBManager.getConnection()) {
             String query = "SELECT i.id, i.name, i.description, ii.image_data " +
                     "FROM items i " +
                     "LEFT JOIN item_images ii ON i.id = ii.item_id " +
@@ -44,7 +44,7 @@ public class ItemDB extends bo.Item {
     public static Collection getAllItems() {
         Vector items = new Vector();
 
-        try (Connection con = DBManger.getConnection()) {
+        try (Connection con = DBManager.getConnection()) {
             String query = "SELECT i.id, i.name, i.description, ii.image_data " +
                     "FROM items i " +
                     "LEFT JOIN item_images ii ON i.id = ii.item_id";
@@ -73,9 +73,37 @@ public class ItemDB extends bo.Item {
         return items;
     }
 
-    public static boolean addItem(ItemInfo item, String categoryName) {
+    public static ItemDB getItemById(int id){
+        ItemDB item= null;
+        try (Connection connection = DBManager.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(
+                     "SELECT i.name, i.description, i.category_id, ii.image_data " +
+                             "FROM items AS i " +
+                             "LEFT JOIN item_images AS ii ON i.id = ii.item_id " +
+                             "WHERE i.id = ?")) {
+            preparedStatement.setInt(1, id);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    String name = resultSet.getString("name");
+                    String description = resultSet.getString("description");
+                    int categoryId = resultSet.getInt("category_id");
+                    byte[] imageData = resultSet.getBytes("image_data");
+
+                    // Skapa ett Item-objekt med hämtade data inklusive bilddata
+                    item = new ItemDB(id, name, description, imageData);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return item;
+    }
+
+    public static boolean addItem(ItemDB item, String categoryName) {
         System.out.println(categoryName);
-        try (Connection con = DBManger.getConnection()) {
+        try (Connection con = DBManager.getConnection()) {
             // Hämta category_id för den angivna kategorin
             String categoryIdQuery = "SELECT id FROM categories WHERE name = ?";
             int categoryId = -1; // Standardvärde om kategorin inte hittas
@@ -96,10 +124,10 @@ public class ItemDB extends bo.Item {
             String insertItemQuery = "INSERT INTO items (name, description, category_id) VALUES (?, ?, ?)";
             try (PreparedStatement itemStatement = con.prepareStatement(insertItemQuery, Statement.RETURN_GENERATED_KEYS)) {
                 itemStatement.setString(1, item.getName());
-                itemStatement.setString(2, item.getDescription());
+                itemStatement.setString(2, item.getDescr());
                 itemStatement.setInt(3, categoryId);
                 System.out.println(item.getName());
-                System.out.println(item.getDescription());
+                System.out.println(item.getDescr());
                 int rowsAffected = itemStatement.executeUpdate();
                 System.out.println(rowsAffected);
                 if (rowsAffected == 0) {

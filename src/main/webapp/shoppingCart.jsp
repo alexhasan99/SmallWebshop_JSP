@@ -1,11 +1,13 @@
+<%@ page import="ui.ShoppingInfo" %>
 <%@ page import="ui.ItemInfo" %>
 <%@ page import="java.util.Collection" %>
 <%@ page import="java.util.Base64" %>
+<%@ page import="java.util.Iterator" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Items</title>
+    <title>Shopping Cart</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/materia/bootstrap.min.css">
     <style>
         /* CSS för att ändra storleken på bilden */
@@ -20,7 +22,7 @@
             font-weight: bold; /* Gör texten fetstilad om så önskas */
         }
 
-        /* CSS för att justera placeringen av "Add to Cart" knappen */
+        /* CSS för att justera placeringen av "Remove" knappen */
         form {
             margin-top: 10px; /* Ändra marginalen över knappen efter behov */
         }
@@ -34,14 +36,16 @@
         <th>Action</th>
     </tr>
     <%
-        java.util.Collection<ItemInfo> itemInfoList = (Collection<ItemInfo>)request.getAttribute("itemInfoList");
-        if (itemInfoList != null) {
-            for (ItemInfo item : itemInfoList) {
-                byte[] imageData = item.getImageData();
-                String base64Image = "";
-                if (imageData != null && imageData.length > 0) {
-                    base64Image = Base64.getEncoder().encodeToString(imageData);
-                }
+        ShoppingInfo shoppingInfo = (ShoppingInfo) request.getAttribute("shoppingInfo");
+        Collection<ItemInfo> items = shoppingInfo.getItems();
+        Iterator<ItemInfo> iterator = items.iterator();
+        while (iterator.hasNext()) {
+            ItemInfo item = iterator.next();
+            byte[] imageData = item.getImageData();
+            String base64Image = "";
+            if (imageData != null && imageData.length > 0) {
+                base64Image = Base64.getEncoder().encodeToString(imageData);
+            }
     %>
     <tr>
         <td>
@@ -51,14 +55,13 @@
             </div>
         </td>
         <td>
-            <form action="addToCart" method="POST">
+            <form action="remove" method="POST">
                 <input type="hidden" name="itemId" value="<%= item.getId() %>">
-                <input type="submit" value="Add to Cart">
+                <input type="submit" value="Remove">
             </form>
         </td>
     </tr>
     <%
-            }
         }
     %>
 </table>

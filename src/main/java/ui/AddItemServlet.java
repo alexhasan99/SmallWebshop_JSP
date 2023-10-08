@@ -21,7 +21,6 @@ public class AddItemServlet extends HttpServlet {
         // Hämta data från formuläret
         String name = request.getParameter("name");
         String description = request.getParameter("description");
-        System.out.println(request.getParameter("description"));
         String category = request.getParameter("category");
         Part imagePart = request.getPart("image");
         InputStream imageInputStream = imagePart.getInputStream();

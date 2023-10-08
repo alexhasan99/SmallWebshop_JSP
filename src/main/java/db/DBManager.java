@@ -4,17 +4,17 @@ import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.sql.Connection;
 
-public class DBManger {
-    private static DBManger instance = null;
+public class DBManager {
+    private static DBManager instance = null;
     private BasicDataSource dataSource;
 
-    private static DBManger getInstance() {
+    private static DBManager getInstance() {
         if (instance == null)
-            instance = new DBManger();
+            instance = new DBManager();
         return instance;
     }
 
-    private DBManger() {
+    private DBManager() {
         dataSource = new BasicDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
         dataSource.setUrl("jdbc:mysql://localhost/smallWebShop?user=root&password=test1212");

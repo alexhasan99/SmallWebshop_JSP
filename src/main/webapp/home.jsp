@@ -40,7 +40,7 @@
 <!-- Navigationsbar -->
 <div class="navbar">
     <a href="items">Items</a>
-    <span class="cart-icon">🛒</span>
+    <a href="shoppingCart"><span class="cart-icon">🛒</span></a>
     <a href="logout">Log out</a>
 </div>
 
@@ -65,6 +65,7 @@
     </form>
     <a href="addItem.jsp">Add New Item</a>
     <jsp:include page="items.jsp" />
+    <jsp:include page="shoppingCart" />
 </div>
 
 </body>
