@@ -1,6 +1,7 @@
 package bo;
 
 import db.ItemDB;
+import ui.ItemInfo;
 
 import java.util.Collection;
 
@@ -19,6 +20,11 @@ public class Item {
     static public Collection getAllItems(){
         return ItemDB.getAllItems();
     }
+
+    static public boolean addItemToDB(ItemInfo i, String category){
+        return ItemDB.addItem(i,category);
+    }
+
 
     protected Item (int id, String name, String descr, byte[] imageData){
         this.id= id;

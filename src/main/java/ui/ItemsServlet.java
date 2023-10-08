@@ -16,13 +16,15 @@ import java.util.Collection;
 public class ItemsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Collection<ItemInfo> list = ItemHandler.getAllItems();
-        for (ItemInfo i: list) {
-            System.out.println(i.getName());
-            System.out.println(i.getDescription());
-            System.out.println(Arrays.toString(i.getImageData()));
+        String selectedCategory = request.getParameter("category");
+        if (selectedCategory != null && !selectedCategory.isEmpty() && !selectedCategory.equals("All")) {
+            Collection<ItemInfo> itemsInCategory = ItemHandler.getItemsWithGroup(selectedCategory);
+            request.setAttribute("itemInfoList", itemsInCategory);
+        } else {
+
+            Collection<ItemInfo> allItems = ItemHandler.getAllItems();
+            request.setAttribute("itemInfoList", allItems);
         }
-        request.setAttribute("itemInfoList", list);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/home.jsp");
         dispatcher.forward(request, response);
     }

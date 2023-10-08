@@ -6,6 +6,8 @@ public class ItemInfo {
 
     private byte[] imageData;
 
+    private int id;
+
     public ItemInfo(String name, String description, byte[] imageData) {
         this.name = name;
         this.description = description;
@@ -30,5 +32,13 @@ public class ItemInfo {
 
     public byte[] getImageData() {
         return imageData;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

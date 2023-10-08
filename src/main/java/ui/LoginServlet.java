@@ -16,12 +16,9 @@ public class LoginServlet extends HttpServlet {
         System.out.println("Servlet doGet executed");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        // Här bör du använda en säker metod för användarautentisering, t.ex. kontrollera en databas
         if (isValidUser(username, password)) {
-            // Om användaren är giltig, lagra användarnamnet i en sessionsvariabel
             request.getSession().setAttribute("username", username);
 
-            // Skicka användaren till välkomstsidan
             response.sendRedirect("home.jsp");
         } else {
             // Om användaren är ogiltig, skicka dem tillbaka till inloggningssidan med ett felmeddelande
