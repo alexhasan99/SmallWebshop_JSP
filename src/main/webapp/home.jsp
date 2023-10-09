@@ -5,7 +5,7 @@
     <title>Home</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/materia/bootstrap.min.css">
     <style>
-        /* CSS för navigation bar */
+
         .navbar {
             background-color: #333;
             overflow: hidden;
@@ -30,21 +30,20 @@
             margin-right: 10px;
         }
 
-        /* CSS för sidinnehåll */
         .content {
             padding: 20px;
         }
     </style>
 </head>
 <body>
-<!-- Navigationsbar -->
+
 <div class="navbar">
     <a href="items">Items</a>
     <a href="shoppingCart"><span class="cart-icon">🛒</span></a>
     <a href="logout">Log out</a>
 </div>
 
-<!-- Sidinnehåll -->
+
 <div class="content">
     <h1>Welcome to the Webshop</h1>
     <form action="home" method="GET">

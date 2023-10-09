@@ -11,7 +11,7 @@ import java.io.IOException;
 @WebServlet("/remove")
 public class RemoveFromCartServlet extends HttpServlet {
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Hämta användarnamnet från sessionen (om du har det sparad där)
         String username = (String) request.getSession().getAttribute("username");
