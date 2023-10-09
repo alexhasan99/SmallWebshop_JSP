@@ -31,18 +31,36 @@
 
         /* Style for the header */
         .navbar {
-            background-color: #0078a9; /* Change the background color to match your design */
+            background-color: #333333;
             padding: 10px;
-            color: #fff; /* Change the text color to match your design */
+            color: #fff;
+            flex-grow: 1;
+            align-items: center;
         }
 
         /* Style for the "Home" button */
         .home-button {
-            background-color: #444;
+            background-color: #666;
             color: #fff;
             padding: 10px 20px;
             text-decoration: none;
             margin-bottom: 20px;
+            float: right;
+        }
+
+        /* Style for the navbar text */
+        .navbar-text {
+            flex-grow: 1;
+            font-size: 19px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* Style for the items grid */
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust the item width as needed */
+            gap: 20px; /* Adjust the gap between items as needed */
         }
     </style>
 </head>
@@ -50,14 +68,11 @@
 
 <div class="navbar">
     <a href="home" class="home-button">Home</a>
+    <span class="navbar-text">Your Shopping Cart</span> <!-- Add this line -->
 </div>
 
 <div class="container">
-    <table border="1">
-        <tr>
-            <th>Item</th>
-            <th>Action</th>
-        </tr>
+    <div class="items-grid">
         <%
             ShoppingInfo shoppingInfo = (ShoppingInfo) request.getAttribute("shoppingInfo");
             Collection<ItemInfo> items = shoppingInfo.getItems();
@@ -70,24 +85,20 @@
                     base64Image = Base64.getEncoder().encodeToString(imageData);
                 }
         %>
-        <tr>
-            <td>
-                <div class="item-container">
-                    <img src="data:image/jpeg;base64, <%= base64Image %>" width="200" height="200">
-                    <div class="item-name"><%= item.getName() %></div>
-                </div>
-            </td>
-            <td>
-                <form action="remove" method="POST">
-                    <input type="hidden" name="itemId" value="<%= item.getId() %>">
-                    <input type="submit" value="Remove">
-                </form>
-            </td>
-        </tr>
+        <div>
+            <div class="item-container">
+                <img src="data:image/jpeg;base64, <%= base64Image %>" width="200" height="200">
+                <div class="item-name"><%= item.getName() %></div>
+            </div>
+            <form action="remove" method="POST">
+                <input type="hidden" name="itemId" value="<%= item.getId() %>">
+                <input type="submit" value="Remove">
+            </form>
+        </div>
         <%
             }
         %>
-    </table>
+    </div>
 </div>
 
 </body>

@@ -37,9 +37,8 @@
 <body>
 
 <div class="navbar">
-    <a href="items">Items</a>
-    <a href="shoppingCart"><span class="cart-icon">🛒</span></a>
     <a href="logout">Log out</a>
+    <a href="shoppingCart"><span class="cart-icon">🛒</span></a>
 </div>
 
 
@@ -48,6 +47,7 @@
     <form action="home" method="GET">
         <label for="category">Choose a Category:</label>
         <select name="category" id="category">
+            <option value="All">All</option>
             <option value="Electronics">Electronics</option>
             <option value="Clothing">Clothing</option>
             <option value="Home & Garden">Home & Garden</option>
@@ -57,7 +57,6 @@
             <option value="Beauty">Beauty</option>
             <option value="Other">Other</option>
             <option value="Fruits">Fruits</option>
-            <option value="All">All</option>
         </select>
         <input type="submit" value="Show Items">
     </form>

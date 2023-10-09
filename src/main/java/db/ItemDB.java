@@ -38,7 +38,6 @@ public class ItemDB extends bo.Item {
                         String name = rs.getString("name");
                         String description = rs.getString("description");
 
-                        // Get the BLOB data
                         Blob imageDataBlob = rs.getBlob("image_data");
                         byte[] imageData = null;
                         if (imageDataBlob != null) {
@@ -69,10 +68,8 @@ public class ItemDB extends bo.Item {
                 if (resultSet.next()) {
                     String name = resultSet.getString("name");
                     String description = resultSet.getString("description");
-                    int categoryId = resultSet.getInt("category_id");
                     byte[] imageData = resultSet.getBytes("image_data");
 
-                    // Skapa ett Item-objekt med hämtade data inklusive bilddata
                     item = new ItemDB(id, name, description, imageData);
                 }
             }
@@ -87,18 +84,17 @@ public class ItemDB extends bo.Item {
         try (Connection con = DBManager.getConnection()) {
             // Hämta category_id för den angivna kategorin
             String categoryIdQuery = "SELECT id FROM categories WHERE name = ?";
-            int categoryId = -1; // Standardvärde om kategorin inte hittas
+            int categoryId = -1;
             try (PreparedStatement categoryIdStatement = con.prepareStatement(categoryIdQuery)) {
                 categoryIdStatement.setString(1, categoryName);
                 try (ResultSet categoryIdResultSet = categoryIdStatement.executeQuery()) {
                     if (categoryIdResultSet.next()) {
                         categoryId = categoryIdResultSet.getInt("id");
-                        System.out.println(categoryId);
                     }
                 }
             }
             if (categoryId == -1) {
-                // Kategorin hittades inte, returnera false
+
                 return false;
             }
 
@@ -107,21 +103,17 @@ public class ItemDB extends bo.Item {
                 itemStatement.setString(1, item.getName());
                 itemStatement.setString(2, item.getDescr());
                 itemStatement.setInt(3, categoryId);
-                System.out.println(item.getName());
-                System.out.println(item.getDescr());
                 int rowsAffected = itemStatement.executeUpdate();
-                System.out.println(rowsAffected);
                 if (rowsAffected == 0) {
-                    // Inget objekt lades till
+
                     return false;
                 }
 
-                // Hämta det genererade nyckelvärdet (id) för det nya objektet
                 try (ResultSet generatedKeys = itemStatement.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         int itemId = generatedKeys.getInt(1);
 
-                        // Lägg till bilddata i item_images-tabellen
+
                         String insertImageQuery = "INSERT INTO item_images (item_id, image_data) VALUES (?, ?)";
                         try (PreparedStatement imageStatement = con.prepareStatement(insertImageQuery)) {
                             imageStatement.setInt(1, itemId);
@@ -131,7 +123,6 @@ public class ItemDB extends bo.Item {
                         }
                         return true;
                     } else {
-                        // Inget nyckelvärde genererades
                         return false;
                     }
                 }
@@ -147,10 +138,3 @@ public class ItemDB extends bo.Item {
     }
 
 }
-
-
-// Search by category
-
-// Search by name
-
-// View All Items

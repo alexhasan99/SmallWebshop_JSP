@@ -21,10 +21,14 @@
             height: 200px; /* Ändra bildhöjden efter behov */
         }
 
-        /* CSS för att ändra textstorleken för namnet */
+
         .item-name {
-            font-size: 16px; /* Ändra textstorleken efter behov */
-            font-weight: bold; /* Gör texten fetstilad om så önskas */
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .item-Descr {
+            font-size: 13px;
+            font-weight: lighter;
         }
 
         /* CSS för att justera placeringen av "Add to Cart" knappen */
@@ -48,8 +52,9 @@
         %>
         <div class="col-md-3">
             <div class="item-container">
-                <img src="data:image/jpeg;base64, <%= base64Image %>" width="200" height="200"> <!-- Visa bilden större -->
-                <div class="item-name"><%= item.getName() %></div> <!-- Visa bara namnet -->
+                <img src="data:image/jpeg;base64, <%= base64Image %>" width="200" height="200">
+                <div class="item-name"><%= item.getName() %></div>
+                <div class="item-Descr"><%= item.getDescription() %></div>
             </div>
             <form action="addToCart" method="POST">
                 <input type="hidden" name="itemId" value="<%= item.getId() %>">
