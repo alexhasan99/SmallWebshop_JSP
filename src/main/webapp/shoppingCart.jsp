@@ -10,61 +10,85 @@
     <title>Shopping Cart</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/materia/bootstrap.min.css">
     <style>
-        /* CSS för att ändra storleken på bilden */
+        /* Include the common styles from your previous code */
         .item-container img {
-            width: 200px; /* Ändra bildbredden efter behov */
-            height: 200px; /* Ändra bildhöjden efter behov */
+            width: 200px;
+            height: 200px;
         }
-
-        /* CSS för att ändra textstorleken för namnet */
         .item-name {
-            font-size: 16px; /* Ändra textstorleken efter behov */
-            font-weight: bold; /* Gör texten fetstilad om så önskas */
+            font-size: 16px;
+            font-weight: bold;
+        }
+        form {
+            margin-top: 10px;
         }
 
-        /* CSS för att justera placeringen av "Remove" knappen */
-        form {
-            margin-top: 10px; /* Ändra marginalen över knappen efter behov */
+        /* Style for the container div */
+        .container {
+            max-width: 1200px; /* Adjust the maximum width as needed */
+            margin: 0 auto;
+        }
+
+        /* Style for the header */
+        .navbar {
+            background-color: #0078a9; /* Change the background color to match your design */
+            padding: 10px;
+            color: #fff; /* Change the text color to match your design */
+        }
+
+        /* Style for the "Home" button */
+        .home-button {
+            background-color: #444;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
 
-<table border="1">
-    <tr>
-        <th>Item</th>
-        <th>Action</th>
-    </tr>
-    <%
-        ShoppingInfo shoppingInfo = (ShoppingInfo) request.getAttribute("shoppingInfo");
-        Collection<ItemInfo> items = shoppingInfo.getItems();
-        Iterator<ItemInfo> iterator = items.iterator();
-        while (iterator.hasNext()) {
-            ItemInfo item = iterator.next();
-            byte[] imageData = item.getImageData();
-            String base64Image = "";
-            if (imageData != null && imageData.length > 0) {
-                base64Image = Base64.getEncoder().encodeToString(imageData);
+<div class="navbar">
+    <a href="home" class="home-button">Home</a>
+</div>
+
+<div class="container">
+    <table border="1">
+        <tr>
+            <th>Item</th>
+            <th>Action</th>
+        </tr>
+        <%
+            ShoppingInfo shoppingInfo = (ShoppingInfo) request.getAttribute("shoppingInfo");
+            Collection<ItemInfo> items = shoppingInfo.getItems();
+            Iterator<ItemInfo> iterator = items.iterator();
+            while (iterator.hasNext()) {
+                ItemInfo item = iterator.next();
+                byte[] imageData = item.getImageData();
+                String base64Image = "";
+                if (imageData != null && imageData.length > 0) {
+                    base64Image = Base64.getEncoder().encodeToString(imageData);
+                }
+        %>
+        <tr>
+            <td>
+                <div class="item-container">
+                    <img src="data:image/jpeg;base64, <%= base64Image %>" width="200" height="200">
+                    <div class="item-name"><%= item.getName() %></div>
+                </div>
+            </td>
+            <td>
+                <form action="remove" method="POST">
+                    <input type="hidden" name="itemId" value="<%= item.getId() %>">
+                    <input type="submit" value="Remove">
+                </form>
+            </td>
+        </tr>
+        <%
             }
-    %>
-    <tr>
-        <td>
-            <div class="item-container">
-                <img src="data:image/jpeg;base64, <%= base64Image %>" width="200" height="200"> <!-- Visa bilden större -->
-                <div class="item-name"><%= item.getName() %></div> <!-- Visa bara namnet -->
-            </div>
-        </td>
-        <td>
-            <form action="remove" method="POST">
-                <input type="hidden" name="itemId" value="<%= item.getId() %>">
-                <input type="submit" value="Remove">
-            </form>
-        </td>
-    </tr>
-    <%
-        }
-    %>
-</table>
+        %>
+    </table>
+</div>
 
 </body>
 </html>

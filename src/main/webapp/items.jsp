@@ -9,6 +9,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/materia/bootstrap.min.css">
     <style>
         /* CSS för att ändra storleken på bilden */
+        .item-container {
+            display: inline-block;
+            margin: 10px;
+            vertical-align: top;
+            text-align: center;
+        }
+
         .item-container img {
             width: 200px; /* Ändra bildbredden efter behov */
             height: 200px; /* Ändra bildhöjden efter behov */
@@ -27,41 +34,33 @@
     </style>
 </head>
 <body>
-
-<table border="1">
-    <tr>
-        <th>Item</th>
-        <th>Action</th>
-    </tr>
-    <%
-        java.util.Collection<ItemInfo> itemInfoList = (Collection<ItemInfo>)request.getAttribute("itemInfoList");
-        if (itemInfoList != null) {
-            for (ItemInfo item : itemInfoList) {
-                byte[] imageData = item.getImageData();
-                String base64Image = "";
-                if (imageData != null && imageData.length > 0) {
-                    base64Image = Base64.getEncoder().encodeToString(imageData);
-                }
-    %>
-    <tr>
-        <td>
+<div class="container">
+    <div class="row">
+        <%
+            java.util.Collection<ItemInfo> itemInfoList = (Collection<ItemInfo>)request.getAttribute("itemInfoList");
+            if (itemInfoList != null) {
+                for (ItemInfo item : itemInfoList) {
+                    byte[] imageData = item.getImageData();
+                    String base64Image = "";
+                    if (imageData != null && imageData.length > 0) {
+                        base64Image = Base64.getEncoder().encodeToString(imageData);
+                    }
+        %>
+        <div class="col-md-3">
             <div class="item-container">
                 <img src="data:image/jpeg;base64, <%= base64Image %>" width="200" height="200"> <!-- Visa bilden större -->
                 <div class="item-name"><%= item.getName() %></div> <!-- Visa bara namnet -->
             </div>
-        </td>
-        <td>
             <form action="addToCart" method="POST">
                 <input type="hidden" name="itemId" value="<%= item.getId() %>">
                 <input type="submit" value="Add to Cart">
             </form>
-        </td>
-    </tr>
-    <%
+        </div>
+        <%
+                }
             }
-        }
-    %>
-</table>
-
+        %>
+    </div>
+</div>
 </body>
 </html>

@@ -22,7 +22,7 @@ public class Item {
     }
 
     static public boolean addItemToDB(Item i, String category){
-        return ItemDB.addItem((ItemDB) i,category);
+        return ItemDB.addItem(i,category);
     }
 
     static public Object getById(int id){

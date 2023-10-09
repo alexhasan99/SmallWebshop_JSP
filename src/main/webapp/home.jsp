@@ -3,7 +3,6 @@
 <html>
 <head>
     <title>Home</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/materia/bootstrap.min.css">
     <style>
 
         .navbar {
@@ -64,7 +63,6 @@
     </form>
     <a href="addItem.jsp">Add New Item</a>
     <jsp:include page="items.jsp" />
-    <jsp:include page="shoppingCart" />
 </div>
 
 </body>

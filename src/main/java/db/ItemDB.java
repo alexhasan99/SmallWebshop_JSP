@@ -1,5 +1,6 @@
 package db;
 
+import bo.Item;
 import ui.ItemInfo;
 
 import java.sql.*;
@@ -9,46 +10,28 @@ import java.util.Vector;
 
 public class ItemDB extends bo.Item {
     public static Collection searchItemsByCategory(String categoryName) {
-        ArrayList items = new ArrayList();
-
-        try (Connection con = DBManager.getConnection()) {
-            String query = "SELECT i.id, i.name, i.description, ii.image_data " +
-                    "FROM items i " +
-                    "LEFT JOIN item_images ii ON i.id = ii.item_id " +
-                    "WHERE i.category_id = (SELECT id FROM categories WHERE name = ?)";
-            try (PreparedStatement statement = con.prepareStatement(query)) {
-                statement.setString(1, categoryName);
-                try (ResultSet rs = statement.executeQuery()) {
-                    while (rs.next()) {
-                        int id = rs.getInt("id");
-                        String name = rs.getString("name");
-                        String description = rs.getString("description");
-
-                        // Get the BLOB data
-                        Blob imageDataBlob = rs.getBlob("image_data");
-                        byte[] imageData = null;
-                        if (imageDataBlob != null) {
-                            imageData = imageDataBlob.getBytes(1, (int) imageDataBlob.length());
-                        }
-                        ItemDB item = new ItemDB(id, name, description, imageData);
-                        items.add(item);
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return items;
+        return searchItemsByCategoryInternal(categoryName, false);
     }
 
     public static Collection getAllItems() {
+        return searchItemsByCategoryInternal(null, true);
+    }
+
+    private static Collection searchItemsByCategoryInternal(String categoryName, boolean getAllItems) {
         Vector items = new Vector();
 
         try (Connection con = DBManager.getConnection()) {
             String query = "SELECT i.id, i.name, i.description, ii.image_data " +
                     "FROM items i " +
-                    "LEFT JOIN item_images ii ON i.id = ii.item_id";
+                    "LEFT JOIN item_images ii ON i.id = ii.item_id ";
+            if (!getAllItems) {
+                query += "WHERE i.category_id = (SELECT id FROM categories WHERE name = ?)";
+            }
+
             try (PreparedStatement statement = con.prepareStatement(query)) {
+                if (!getAllItems) {
+                    statement.setString(1, categoryName);
+                }
                 try (ResultSet rs = statement.executeQuery()) {
                     while (rs.next()) {
                         int id = rs.getInt("id");
@@ -61,7 +44,6 @@ public class ItemDB extends bo.Item {
                         if (imageDataBlob != null) {
                             imageData = imageDataBlob.getBytes(1, (int) imageDataBlob.length());
                         }
-
                         ItemDB item = new ItemDB(id, name, description, imageData);
                         items.add(item);
                     }
@@ -101,8 +83,7 @@ public class ItemDB extends bo.Item {
         return item;
     }
 
-    public static boolean addItem(ItemDB item, String categoryName) {
-        System.out.println(categoryName);
+    public static boolean addItem(Item item, String categoryName) {
         try (Connection con = DBManager.getConnection()) {
             // Hämta category_id för den angivna kategorin
             String categoryIdQuery = "SELECT id FROM categories WHERE name = ?";

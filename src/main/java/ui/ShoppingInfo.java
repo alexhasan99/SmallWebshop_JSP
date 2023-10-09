@@ -14,7 +14,7 @@ public class ShoppingInfo {
     }
 
     public ArrayList<ItemInfo> getItems() {
-        return items;
+        return (ArrayList<ItemInfo>) items.clone();
     }
 
     public void addItem(ItemInfo item){
