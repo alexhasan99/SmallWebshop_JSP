@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,9 +23,14 @@
                             <input type="checkbox" onclick="togglePasswordVisibility()"> Show Password
                         </div>
                         <button type="submit" class="btn btn-primary">Login</button>
+                        <a href="Registration.jsp" class="btn btn-secondary">Register</a>
                     </form>
                 </div>
             </div>
+            <!-- Visa felmeddelande om det finns -->
+            <c:if test="${not empty message}">
+                <div class="alert alert-danger mt-3">"Invalid username or password."</div>
+            </c:if>
         </div>
     </div>
 </div>
@@ -40,5 +46,3 @@
     }
 </script>
 </html>
-
-

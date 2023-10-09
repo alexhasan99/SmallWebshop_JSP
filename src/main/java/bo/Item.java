@@ -1,14 +1,39 @@
 package bo;
+
+import db.ItemDB;
+import ui.ItemInfo;
+
+import java.util.Collection;
+
 public class Item {
 
     private String name;
     private int id;
     private String descr;
 
-    protected Item (int id, String name, String descr){
+    private byte[] imageData;
+
+    static public Collection searchItemsByCategory(String group){
+        return ItemDB.searchItemsByCategory(group);
+    }
+
+    static public Collection getAllItems(){
+        return ItemDB.getAllItems();
+    }
+
+    static public boolean addItemToDB(Item i, String category){
+        return ItemDB.addItem(i,category);
+    }
+
+    static public Object getById(int id){
+        return ItemDB.getItemById(id);
+    }
+
+    protected Item (int id, String name, String descr, byte[] imageData){
         this.id= id;
         this.name= name;
         this.descr= descr;
+        this.imageData=imageData;
     }
 
     public String getName() {
@@ -33,5 +58,22 @@ public class Item {
 
     public void setDescr(String descr) {
         this.descr = descr;
+    }
+
+    public byte[] getImageData() {
+        return imageData;
+    }
+
+    public void setImageData(byte[] imageData) {
+        this.imageData = imageData;
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "name='" + name + '\'' +
+                ", id=" + id +
+                ", descr='" + descr + '\'' +
+                '}';
     }
 }
