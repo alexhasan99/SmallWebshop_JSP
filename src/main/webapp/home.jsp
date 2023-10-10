@@ -3,9 +3,8 @@
 <html>
 <head>
     <title>Home</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/materia/bootstrap.min.css">
     <style>
-        /* CSS för navigation bar */
+
         .navbar {
             background-color: #333;
             overflow: hidden;
@@ -30,26 +29,25 @@
             margin-right: 10px;
         }
 
-        /* CSS för sidinnehåll */
         .content {
             padding: 20px;
         }
     </style>
 </head>
 <body>
-<!-- Navigationsbar -->
+
 <div class="navbar">
-    <a href="items">Items</a>
-    <span class="cart-icon">🛒</span>
     <a href="logout">Log out</a>
+    <a href="shoppingCart"><span class="cart-icon">🛒</span></a>
 </div>
 
-<!-- Sidinnehåll -->
+
 <div class="content">
     <h1>Welcome to the Webshop</h1>
     <form action="home" method="GET">
         <label for="category">Choose a Category:</label>
         <select name="category" id="category">
+            <option value="All">All</option>
             <option value="Electronics">Electronics</option>
             <option value="Clothing">Clothing</option>
             <option value="Home & Garden">Home & Garden</option>
@@ -59,7 +57,6 @@
             <option value="Beauty">Beauty</option>
             <option value="Other">Other</option>
             <option value="Fruits">Fruits</option>
-            <option value="All">All</option>
         </select>
         <input type="submit" value="Show Items">
     </form>

@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebFilter("/home")
+@WebFilter(urlPatterns = {"/home", "/shoppingCart"})
 public class AuthenticationFilter implements Filter {
 
     public void init(FilterConfig fConfig) throws ServletException {

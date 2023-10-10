@@ -19,7 +19,7 @@ public class LoginServlet extends HttpServlet {
         if (isValidUser(username, password)) {
             request.getSession().setAttribute("username", username);
 
-            response.sendRedirect("home.jsp");
+            response.sendRedirect("home");
         } else {
             // Om användaren är ogiltig, skicka dem tillbaka till inloggningssidan med ett felmeddelande
             request.setAttribute("message", "Invalid username or password.");

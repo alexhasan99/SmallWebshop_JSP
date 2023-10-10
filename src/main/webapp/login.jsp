@@ -27,7 +27,6 @@
                     </form>
                 </div>
             </div>
-            <!-- Visa felmeddelande om det finns -->
             <c:if test="${not empty message}">
                 <div class="alert alert-danger mt-3">"Invalid username or password."</div>
             </c:if>

@@ -21,10 +21,13 @@ public class Item {
         return ItemDB.getAllItems();
     }
 
-    static public boolean addItemToDB(ItemInfo i, String category){
+    static public boolean addItemToDB(Item i, String category){
         return ItemDB.addItem(i,category);
     }
 
+    static public Object getById(int id){
+        return ItemDB.getItemById(id);
+    }
 
     protected Item (int id, String name, String descr, byte[] imageData){
         this.id= id;
