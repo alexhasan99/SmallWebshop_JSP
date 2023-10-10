@@ -12,15 +12,12 @@ import java.io.IOException;
 public class LogOutServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Get the current session, if it exists
         HttpSession session = request.getSession(false);
 
         if (session != null) {
-            // Invalidate (i.e., logout) the current session
             session.invalidate();
         }
 
-        // Redirect the user to the login page or any other desired page after logout
         response.sendRedirect(request.getContextPath() + "/login.jsp");
     }
 
