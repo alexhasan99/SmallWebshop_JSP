@@ -10,7 +10,7 @@
     <title>Shopping Cart</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/materia/bootstrap.min.css">
     <style>
-        /* Include the common styles from your previous code */
+
         .item-container img {
             width: 200px;
             height: 200px;
@@ -23,13 +23,12 @@
             margin-top: 10px;
         }
 
-        /* Style for the container div */
+
         .container {
-            max-width: 1200px; /* Adjust the maximum width as needed */
+            max-width: 1200px;
             margin: 0 auto;
         }
 
-        /* Style for the header */
         .navbar {
             background-color: #333333;
             padding: 10px;
@@ -38,7 +37,7 @@
             align-items: center;
         }
 
-        /* Style for the "Home" button */
+
         .home-button {
             background-color: #666;
             color: #fff;
@@ -48,7 +47,7 @@
             float: right;
         }
 
-        /* Style for the navbar text */
+
         .navbar-text {
             flex-grow: 1;
             font-size: 19px;
@@ -56,11 +55,11 @@
             font-weight: bold;
         }
 
-        /* Style for the items grid */
+
         .items-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust the item width as needed */
-            gap: 20px; /* Adjust the gap between items as needed */
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
         }
     </style>
 </head>
@@ -68,7 +67,7 @@
 
 <div class="navbar">
     <a href="home" class="home-button">Home</a>
-    <span class="navbar-text">Your Shopping Cart</span> <!-- Add this line -->
+    <span class="navbar-text">Your Shopping Cart</span>
 </div>
 
 <div class="container">

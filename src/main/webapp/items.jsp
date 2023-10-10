@@ -17,8 +17,8 @@
         }
 
         .item-container img {
-            width: 200px; /* Ändra bildbredden efter behov */
-            height: 200px; /* Ändra bildhöjden efter behov */
+            width: 200px;
+            height: 200px;
         }
 
 
@@ -31,9 +31,9 @@
             font-weight: lighter;
         }
 
-        /* CSS för att justera placeringen av "Add to Cart" knappen */
+
         form {
-            margin-top: 10px; /* Ändra marginalen över knappen efter behov */
+            margin-top: 10px;
         }
     </style>
 </head>
