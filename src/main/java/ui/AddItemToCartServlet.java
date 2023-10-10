@@ -1,3 +1,7 @@
+/**
+ * A servlet class responsible for handling HTTP POST requests to add items to the user's shopping cart.
+ * This servlet interacts with the ItemHandler and ShoppingCartHandler classes to manage shopping cart items.
+ */
 package ui;
 
 import bo.ItemHandler;
@@ -15,16 +19,10 @@ public class AddItemToCartServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Hämta användarnamnet från sessionen (om du har det sparad där)
+
         String username = (String) request.getSession().getAttribute("username");
-
-        // Hämta itemId från formuläret
         String itemId = request.getParameter("itemId");
-
-        // Försök lägga till objektet i kundvagnen
         boolean success = ShoppingCartHandler.addItemToCart(username, Integer.parseInt(itemId));
-
-        // Om insättningen lyckades, skicka användaren tillbaka till startsidan (eller var du vill)
         if (success) {
             response.sendRedirect("home");
         } else {

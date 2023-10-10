@@ -16,6 +16,7 @@ import java.io.InputStream;
 @WebServlet("/addItemServlet")
 @MultipartConfig
 public class AddItemServlet extends HttpServlet {
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String name = request.getParameter("name");
@@ -27,7 +28,6 @@ public class AddItemServlet extends HttpServlet {
 
         ItemInfo newItem = new ItemInfo(name, description, imageData);
 
-
         boolean success = ItemHandler.addItem(newItem, category);
 
         if (success) {
@@ -36,6 +36,7 @@ public class AddItemServlet extends HttpServlet {
             response.sendRedirect("addItem.jsp");
         }
     }
+
 }
 
 

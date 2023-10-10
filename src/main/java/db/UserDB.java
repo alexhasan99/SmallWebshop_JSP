@@ -4,6 +4,13 @@ import bo.User;
 import java.sql.*;
 
 public class UserDB extends User {
+    /**
+     * Searches for a user with the specified username and password in the database.
+     *
+     * @param username The username of the user to search for.
+     * @param password The password of the user to search for.
+     * @return `true` if a user with the given username and password exists in the database, `false` otherwise.
+     */
     public static boolean searchUser(String username, String password) {
         try (Connection con = DBManager.getConnection()) {
             String query = "SELECT id, name, password FROM users WHERE name = ? AND password = ?";
@@ -22,6 +29,13 @@ public class UserDB extends User {
         return false;
     }
 
+    /**
+     * Adds a new user with the specified username and password to the database.
+     *
+     * @param username The username of the user to add.
+     * @param password The password of the user to add.
+     * @return `true` if the user was successfully added to the database, `false` otherwise.
+     */
     public static boolean addUser(String username, String password) {
         try (Connection con = DBManager.getConnection()) {
             String query = "INSERT INTO users (name, password) VALUES (?, ?)";
@@ -46,6 +60,7 @@ public class UserDB extends User {
 
         return false;
     }
+
 
     private UserDB(String username, String password, int id) {
         super(username, password, id);

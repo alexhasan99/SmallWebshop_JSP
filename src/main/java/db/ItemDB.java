@@ -9,16 +9,34 @@ import java.util.Collection;
 import java.util.Vector;
 
 public class ItemDB extends bo.Item {
-    public static Collection searchItemsByCategory(String categoryName) {
+    /**
+     * Searches for items by category name and returns a collection of ItemDB objects.
+     *
+     * @param categoryName The name of the category to search for items.
+     * @return A collection of ItemDB objects matching the specified category name.
+     */
+    public static Collection<ItemDB> searchItemsByCategory(String categoryName) {
         return searchItemsByCategoryInternal(categoryName, false);
     }
 
-    public static Collection getAllItems() {
+    /**
+     * Retrieves all items and returns a collection of ItemDB objects.
+     *
+     * @return A collection of all ItemDB objects.
+     */
+    public static Collection<ItemDB> getAllItems() {
         return searchItemsByCategoryInternal(null, true);
     }
 
-    private static Collection searchItemsByCategoryInternal(String categoryName, boolean getAllItems) {
-        Vector items = new Vector();
+    /**
+     * Internal method to search for items by category or retrieve all items.
+     *
+     * @param categoryName The name of the category to search for items (null for all items).
+     * @param getAllItems  A flag indicating whether to retrieve all items or not.
+     * @return A collection of ItemDB objects matching the specified criteria.
+     */
+    private static Collection<ItemDB> searchItemsByCategoryInternal(String categoryName, boolean getAllItems) {
+        Vector<ItemDB> items = new Vector<>();
 
         try (Connection con = DBManager.getConnection()) {
             String query = "SELECT i.id, i.name, i.description, ii.image_data " +
@@ -54,8 +72,14 @@ public class ItemDB extends bo.Item {
         return items;
     }
 
-    public static ItemDB getItemById(int id){
-        ItemDB item= null;
+    /**
+     * Retrieves an item by its unique identifier and returns an ItemDB object.
+     *
+     * @param id The unique identifier of the item to retrieve.
+     * @return An ItemDB object representing the item with the specified ID.
+     */
+    public static ItemDB getItemById(int id) {
+        ItemDB item = null;
         try (Connection connection = DBManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
                      "SELECT i.name, i.description, i.category_id, ii.image_data " +
@@ -80,9 +104,16 @@ public class ItemDB extends bo.Item {
         return item;
     }
 
+    /**
+     * Adds an item to the database with the specified category.
+     *
+     * @param item        The Item object to add to the database.
+     * @param categoryName The name of the category to which the item belongs.
+     * @return `true` if the item was successfully added to the database, `false` otherwise.
+     */
     public static boolean addItem(Item item, String categoryName) {
         try (Connection con = DBManager.getConnection()) {
-            // Hämta category_id för den angivna kategorin
+            // Get the category_id for the specified category
             String categoryIdQuery = "SELECT id FROM categories WHERE name = ?";
             int categoryId = -1;
             try (PreparedStatement categoryIdStatement = con.prepareStatement(categoryIdQuery)) {
@@ -94,7 +125,6 @@ public class ItemDB extends bo.Item {
                 }
             }
             if (categoryId == -1) {
-
                 return false;
             }
 
@@ -105,14 +135,12 @@ public class ItemDB extends bo.Item {
                 itemStatement.setInt(3, categoryId);
                 int rowsAffected = itemStatement.executeUpdate();
                 if (rowsAffected == 0) {
-
                     return false;
                 }
 
                 try (ResultSet generatedKeys = itemStatement.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         int itemId = generatedKeys.getInt(1);
-
 
                         String insertImageQuery = "INSERT INTO item_images (item_id, image_data) VALUES (?, ?)";
                         try (PreparedStatement imageStatement = con.prepareStatement(insertImageQuery)) {
@@ -132,6 +160,7 @@ public class ItemDB extends bo.Item {
             return false;
         }
     }
+
 
     private ItemDB(int id, String name, String descr, byte[] imageData) {
         super(id, name, descr, imageData);

@@ -1,3 +1,7 @@
+/**
+ * A servlet class responsible for handling HTTP GET requests to display the user's shopping cart.
+ * This servlet interacts with the ShoppingCartHandler class to retrieve the user's shopping cart information.
+ */
 package ui;
 
 import bo.ShoppingCartHandler;
@@ -11,19 +15,19 @@ import java.io.IOException;
 
 @WebServlet("/shoppingCart")
 public class ShoppingServlet extends HttpServlet {
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Hämta användarnamnet från sessionen
+        // Retrieve the username from the session
         String username = (String) request.getSession().getAttribute("username");
         if (username != null) {
-            // Skapa ett ShoppingInfo-objekt med användarnamnet
+            // Create a ShoppingInfo object with the username
             ShoppingInfo shoppingInfo = ShoppingCartHandler.getShopCart(username);
             request.setAttribute("shoppingInfo", shoppingInfo);
             request.getRequestDispatcher("/shoppingCart.jsp").forward(request, response);
         } else {
-            // Användaren är inte inloggad, hantera detta här.
-            response.sendRedirect("home"); // Redirecta användaren till startsidan
+            // The user is not logged in, handle this here.
+            response.sendRedirect("home"); // Redirect the user to the home page
         }
     }
 }
-

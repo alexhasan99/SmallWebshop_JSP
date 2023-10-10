@@ -13,17 +13,36 @@ public class Item {
 
     private byte[] imageData;
 
-    static public Collection searchItemsByCategory(String group){
+    /**
+     * Searches for items by the specified category.
+     *
+     * @param group The category to search for.
+     * @return A collection of items that belong to the specified category.
+     */
+    static public Collection searchItemsByCategory(String group) {
         return ItemDB.searchItemsByCategory(group);
     }
 
-    static public Collection getAllItems(){
+    /**
+     * Retrieves all items from the database.
+     *
+     * @return A collection containing all items in the database.
+     */
+    static public Collection getAllItems() {
         return ItemDB.getAllItems();
     }
 
-    static public boolean addItemToDB(Item i, String category){
-        return ItemDB.addItem(i,category);
+    /**
+     * Adds an item to the database with the specified category.
+     *
+     * @param i        The item to be added to the database.
+     * @param category The category to which the item belongs.
+     * @return `true` if the item was successfully added to the database, `false` otherwise.
+     */
+    static public boolean addItemToDB(Item i, String category) {
+        return ItemDB.addItem(i, category);
     }
+
 
     static public Object getById(int id){
         return ItemDB.getItemById(id);
